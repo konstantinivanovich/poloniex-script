@@ -12,7 +12,6 @@ import (
 
 	"gopkg.in/yaml.v2"
 
-	"github.com/briandowns/spinner"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -37,9 +36,6 @@ func main() {
 	}
 
 	fmt.Println("Parsing data started")
-
-	s := spinner.New(spinner.CharSets[25], 100*time.Millisecond)
-	s.Start()
 
 	db, err := sql.Open(config.Driver, config.Dsn)
 	if err != nil {
@@ -135,7 +131,6 @@ func main() {
 				count++
 				stmt.Close()
 			}
-			s.Restart()
 			fmt.Printf("Inserted %d records for pair %s\n", count, pair)
 			wg.Done()
 		}(id, pair)
@@ -150,8 +145,6 @@ func main() {
 	if _, err := db.Exec(`INSERT INTO market_history SELECT * FROM market_history_poloniex`); err != nil {
 		log.Printf("could not update market history: %v", err)
 	}
-
-	s.Stop()
 
 	fmt.Println("The market_history table was completely updated")
 }
