@@ -1,4 +1,4 @@
-module main
+module github.com/konstantinivanovich/poloniex-script
 
 require (
 	github.com/briandowns/spinner v0.0.0-20181029155426-195c31b675a7
